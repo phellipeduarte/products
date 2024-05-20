@@ -21,16 +21,15 @@ public class ProductController {
     private ProductRepository productRepository;
 
     @PostMapping
-    public void saveProduct(@RequestBody ProductRequestDTO productRequestDTO){
+    public ResponseEntity<Product> saveProduct(@RequestBody ProductRequestDTO productRequestDTO){
         Product product = new Product(productRequestDTO);
-        productRepository.save(product);
-        return;
+        return ResponseEntity.status(HttpStatus.CREATED).body(productRepository.save(product));
     }
 
     @GetMapping
-    public List<ProductResponseDTO> getAll(){
+    public ResponseEntity<List<ProductResponseDTO>> getAll(){
         List<ProductResponseDTO> productList = productRepository.findAll().stream().map(ProductResponseDTO::new).toList();
-        return productList;
+        return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
 
     @GetMapping("/{id}")
