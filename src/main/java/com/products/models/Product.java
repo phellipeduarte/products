@@ -1,5 +1,6 @@
 package com.products.models;
 
+import com.products.dto.ProductRequestDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -21,4 +22,9 @@ public class Product {
     private UUID id;
     private String name;
     private Double price;
+
+    public Product(ProductRequestDTO productRequestDTO){
+        this.name = productRequestDTO.name();
+        this.price = productRequestDTO.price();
+    }
 }
