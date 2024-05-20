@@ -1,5 +1,6 @@
 package com.products.controllers;
 
+import com.products.dto.ProductResponseDTO;
 import com.products.models.Product;
 import com.products.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class ProductController {
     private ProductRepository productRepository;
 
     @GetMapping
-    public List<Product> getAll(){
-        List<Product> productList = productRepository.findAll();
+    public List<ProductResponseDTO> getAll(){
+        List<ProductResponseDTO> productList = productRepository.findAll().stream().map(ProductResponseDTO::new).toList();
         return productList;
     }
 }
