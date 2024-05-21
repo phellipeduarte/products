@@ -4,6 +4,7 @@ import com.products.dto.ProductRequestDTO;
 import com.products.dto.ProductResponseDTO;
 import com.products.models.Product;
 import com.products.repositories.ProductRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,4 +43,14 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(product);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateProduct(@PathVariable(value = "id") UUID id, @RequestBody ProductRequestDTO productRequestDTO){
+        Optional<Product> productOptional = productRepository.findById(id);
+        if(productOptional.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not Found");
+        }
+        var product = productOptional.get();
+        BeanUtils.copyProperties(productRequestDTO, product);
+        return ResponseEntity.status(HttpStatus.OK).body(productRepository.save(product));
+    }
 }
