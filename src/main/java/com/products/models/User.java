@@ -1,9 +1,7 @@
 package com.products.models;
 
 import com.products.enums.UserRole;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,6 +21,7 @@ import java.util.UUID;
 public class User implements UserDetails {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String username;
     private String password;
