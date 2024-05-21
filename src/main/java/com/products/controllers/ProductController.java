@@ -53,4 +53,15 @@ public class ProductController {
         BeanUtils.copyProperties(productRequestDTO, product);
         return ResponseEntity.status(HttpStatus.OK).body(productRepository.save(product));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteProduct(@PathVariable(value = "id") UUID id){
+        Optional<Product> productOptional = productRepository.findById(id);
+        if(productOptional.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not Found");
+        }
+        var product = productOptional.get();
+        productRepository.delete(product);
+        return ResponseEntity.status(HttpStatus.OK).body("Product deleted successfully");
+    }
 }
