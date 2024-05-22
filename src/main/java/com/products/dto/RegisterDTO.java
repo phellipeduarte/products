@@ -1,4 +1,6 @@
 package com.products.dto;
 
-public record RegisterDTO(String username, String password, String role) {
+import com.products.enums.UserRole;
+
+public record RegisterDTO(String username, String password, UserRole role) {
 }
