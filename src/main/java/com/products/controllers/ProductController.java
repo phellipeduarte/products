@@ -21,18 +21,21 @@ public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity<Product> saveProduct(@RequestBody ProductRequestDTO productRequestDTO){
         Product product = new Product(productRequestDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(productRepository.save(product));
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public ResponseEntity<List<ProductResponseDTO>> getAll(){
         List<ProductResponseDTO> productList = productRepository.findAll().stream().map(ProductResponseDTO::new).toList();
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/{id}")
     public ResponseEntity<Object> getProduct(@PathVariable(value = "id") UUID id){
         Optional<Product> productOptional = productRepository.findById(id);
@@ -43,6 +46,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(product);
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateProduct(@PathVariable(value = "id") UUID id, @RequestBody ProductRequestDTO productRequestDTO){
         Optional<Product> productOptional = productRepository.findById(id);
@@ -54,6 +58,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(productRepository.save(product));
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteProduct(@PathVariable(value = "id") UUID id){
         Optional<Product> productOptional = productRepository.findById(id);
